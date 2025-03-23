@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import router, {resetRouter} from "@/router";
+import router from "@/router";
 
 Vue.use(Vuex)
 
@@ -19,7 +19,6 @@ const store = new Vuex.Store({
             localStorage.removeItem("menus")
             router.push("/login")
             // 重置路由
-            resetRouter()
         }
     }
 })
