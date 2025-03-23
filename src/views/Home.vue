@@ -8,8 +8,8 @@
       <el-card>
         <div class="welcome"> <b> 欢迎使用宠物领养救助平台</b></div>
         <el-divider />
-        <img src="@/assets/back-background.jpg"
-          style="height: 350px;margin: 5px 5px 0 0;-webkit-user-drag: none;-khtml-user-drag: none;-moz-user-drag: none;user-drag: none;" />
+        <!-- <img src="@/assets/back-background.jpg"
+          style="height: 350px;margin: 5px 5px 0 0;-webkit-user-drag: none;-khtml-user-drag: none;-moz-user-drag: none;user-drag: none;" /> -->
         <el-divider />
         <el-row>
           <el-col :span="12">

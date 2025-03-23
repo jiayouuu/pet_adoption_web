@@ -1,18 +1,11 @@
-<!--
- * @Author: 桂佳囿
- * @Date: 2024-01-10 13:54:20
- * @LastEditors: 桂佳囿
- * @LastEditTime: 2025-03-23 14:11:31
- * @Description: 
--->
 <template>
   <div class="wrapper">
     <div
       style="margin: 150px auto; background-color: #fff; width: 450px; height: 300px; padding: 20px; opacity: 0.8; border-radius: 10px;border: 0px solid grey">
       <div style="margin: 20px 0; text-align: center; font-size: 28px; color: rgb(64, 64, 64);">
-        <img src="@/assets/front-logo.jpg"
-          style="width: 30px;height: 30px;margin: 0 5px -5px 0;-webkit-user-drag: none;-khtml-user-drag: none;-moz-user-drag: none;user-drag: none;" />
-        <b><span style="color: #e75c09">宠物领养救助系统</span></b>
+        <img src="@/assets/images/public/logo.png"
+          style="width: 30px;height: 30px;margin: 0 5px -5px 0;" />
+        <b><span style="color: #e75c09">萌宠在线</span></b>
       </div>
       <el-form :model="user" :rules="rules" ref="userForm">
         <el-form-item prop="username">
@@ -21,10 +14,12 @@
         <el-form-item prop="password">
           <el-input size="large" prefix-icon="iconfont icon-r-lock" show-password v-model="user.password"  style="font-size: 22px;"></el-input>
         </el-form-item>
-        <el-form-item style="margin: 10px 0; text-align: right">
+        <el-form-item prop="password">
+          <el-input size="large" prefix-icon="iconfont icon-r-lock" show-password v-model="user.password"  style="font-size: 22px;"></el-input>
+        </el-form-item>
+        <el-form-item style="margin: 10px 0; text-align: center">
           <el-button type="warning" autocomplete="off" @click="$router.push('/register')"> 注册</el-button>
           <el-button type="primary" autocomplete="off" @click="login"> 登录</el-button>
-
         </el-form-item>
 
       </el-form>
@@ -73,7 +68,6 @@ export default {
             }
           }).catch(e => {
             console.log(e);
-
             if (
               e.response == undefined ||
               e.response.data == undefined
@@ -123,7 +117,7 @@ export default {
   width: 100%;
   overflow-y: auto;
   height: 100%;
-  background: url("../assets/background.jpg") center top / cover no-repeat;
+  /* background: url("../assets/background.jpg") center top / cover no-repeat; */
   overflow: hidden;
 }
 </style>

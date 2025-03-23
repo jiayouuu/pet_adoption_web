@@ -4,17 +4,16 @@
     <div style="display: flex; background-color: #fff; height: 60px; line-height: 60px; border-bottom: 1px solid #eee">
       <div style="width: 240px; display: flex; padding-left: 30px">
         <div style="width: 60px">
-          <img src="../../assets/front-logo.jpg" alt="" style="width: 40px; position: relative; top: 10px; right: 0">
+          <img src="@/assets/images/public/logo.png" alt="" style="width: 40px; position: relative; top: 10px; right: 0">
         </div>
-        <div style="flex: 1; font-size: 20px; color: #e75c09; font-weight: bold">宠物领养平台</div>
+        <div style="flex: 1; font-size: 20px; color: #e75c09; font-weight: bold">萌宠在线</div>
       </div>
       <div style="flex: 1">
-
         <el-menu :default-active="'1'" class="el-menu-demo" mode="horizontal" router>
           <el-menu-item index="/front/home">主页</el-menu-item>
           <el-menu-item index="/front/adopt">宠物领养</el-menu-item>
           <el-menu-item index="/front/salvation">宠物救助</el-menu-item>
-          <el-menu-item index="/front/lost">丢失宠物查看</el-menu-item>
+          <el-menu-item index="/front/lost">宠物遗失</el-menu-item>
           <el-menu-item index="/front/article">宠物论坛</el-menu-item>
         </el-menu>
       </div>

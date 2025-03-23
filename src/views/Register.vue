@@ -1,3 +1,10 @@
+<!--
+ * @Author: 桂佳囿
+ * @Date: 2024-01-10 13:54:20
+ * @LastEditors: 桂佳囿
+ * @LastEditTime: 2025-03-23 23:15:44
+ * @Description: 
+-->
 <template>
   <div class="wrapper">
     <div
@@ -77,6 +84,6 @@ export default {
   width: 100%;
   overflow-y: auto;
   height: 100%;
-  background: url("../assets/background.jpg") center top / cover no-repeat;
+  /* background: url("../assets/background.jpg") center top / cover no-repeat; */
   overflow: hidden;
 }</style>
