@@ -153,8 +153,7 @@ export default {
         if (res.code === '200') {
           this.$message.success("评论成功")
           this.commentVis = false
-          this.comment = {}  // 清空数据
-          this.loadComment()
+          this.loadComment(this.comment.articleId)
         } else {
           this.$message.error(res.msg)
         }
@@ -164,7 +163,7 @@ export default {
       this.request.delete("/comment/" + id).then(res => {
         if (res.code === '200') {
           this.$message.success("删除成功")
-          this.loadComment()
+          this.loadComment(this.comment.articleId)
         } else {
           this.$message.error("删除失败")
         }
@@ -176,6 +175,7 @@ export default {
       })
     },
     handleComment(id) {
+      this.comment = {}  // 清空数据
       this.comment.articleId = id
       this.commentVis = true
     },
