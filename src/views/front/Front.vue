@@ -11,7 +11,7 @@
       <div style="flex: 1">
 
         <el-menu :default-active="'1'" class="el-menu-demo" mode="horizontal" router>
-          <el-menu-item index="/front/home"></el-menu-item>
+          <el-menu-item index="/front/home">主页</el-menu-item>
           <el-menu-item index="/front/adopt">宠物领养</el-menu-item>
           <el-menu-item index="/front/salvation">宠物救助</el-menu-item>
           <el-menu-item index="/front/lost">丢失宠物查看</el-menu-item>
