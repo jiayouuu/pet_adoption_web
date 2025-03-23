@@ -94,7 +94,7 @@ export default {
     },
     save() {
       this.request.post("/lost", this.form).then(res => {
-        if (res.code === '200') {
+        if (res.code === 200) {
           this.$message.success("保存成功")
           this.dialogFormVisible = false
           this.load()
@@ -129,7 +129,7 @@ export default {
     },
     del(id) {
       this.request.delete("/lost/" + id).then(res => {
-        if (res.code === '200') {
+        if (res.code === 200) {
           this.$message.success("删除成功")
           this.load()
         } else {
@@ -148,7 +148,7 @@ export default {
       }
       let ids = this.multipleSelection.map(v => v.id)  // [{}, {}, {}] => [1,2,3]
       this.request.post("/lost/del/batch", ids).then(res => {
-        if (res.code === '200') {
+        if (res.code === 200) {
           this.$message.success("批量删除成功")
           this.load()
         } else {

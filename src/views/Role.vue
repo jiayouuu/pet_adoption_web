@@ -144,7 +144,7 @@ export default {
     },
     save() {
       this.request.post("/role", this.form).then(res => {
-        if (res.code === '200') {
+        if (res.code === 200) {
           this.$message.success("保存成功")
           this.dialogFormVisible = false
           this.load()
@@ -155,7 +155,7 @@ export default {
     },
     saveRoleMenu() {
       this.request.post("/role/roleMenu/" + this.roleId, this.$refs.tree.getCheckedKeys()).then(res => {
-        if (res.code === '200') {
+        if (res.code === 200) {
           this.$message.success("绑定成功")
           this.menuDialogVis = false
 
@@ -179,7 +179,7 @@ export default {
     },
     del(id) {
       this.request.delete("/role/" + id).then(res => {
-        if (res.code === '200') {
+        if (res.code === 200) {
           this.$message.success("删除成功")
           this.load()
         } else {
@@ -194,7 +194,7 @@ export default {
     delBatch() {
       let ids = this.multipleSelection.map(v => v.id)  // [{}, {}, {}] => [1,2,3]
       this.request.post("/role/del/batch", ids).then(res => {
-        if (res.code === '200') {
+        if (res.code === 200) {
           this.$message.success("批量删除成功")
           this.load()
         } else {

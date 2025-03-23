@@ -164,7 +164,7 @@ export default {
       this.form.type = 1
       this.form.articleId = this.id
       this.request.post("/comment", this.form).then(res => {
-        if (res.code === '200') {
+        if (res.code === 200) {
           this.$message.success("回复成功")
           this.dialogFormVisible = false
           this.form = {}  // 清空数据
@@ -176,7 +176,7 @@ export default {
     },
     delComment(id) {
       this.request.delete("/comment/" + id).then(res => {
-        if (res.code === '200') {
+        if (res.code === 200) {
           this.$message.success("删除成功")
           this.loadComment()
         } else {

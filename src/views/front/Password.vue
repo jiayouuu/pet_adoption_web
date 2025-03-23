@@ -56,7 +56,7 @@ export default {
             return false
           }
           this.request.post("/user/password", this.form).then(res => {
-            if (res.code === '200') {
+            if (res.code === 200) {
               this.$message.success("修改成功")
               this.$store.commit("logout")
             } else {

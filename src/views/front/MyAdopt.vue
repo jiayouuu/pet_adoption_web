@@ -122,7 +122,7 @@ export default {
   methods: {
     save() {
       this.request.post("/applcation", this.form).then(res => {
-        if (res.code === '200') {
+        if (res.code === 200) {
           this.$message.success("保存成功")
           this.dialogFormVisible = false
         } else {

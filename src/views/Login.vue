@@ -66,7 +66,7 @@ export default {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {  // 表单校验合法
           this.request.post("/user/login", {...this.user,captchaId:this.captchaId}).then(res => {
-            if (res.code === '200') {
+            if (res.code === 200) {
               localStorage.setItem("user", JSON.stringify(res.data))  // 存储用户信息到浏览器
               localStorage.setItem("menus", JSON.stringify(res.data.menus))  // 存储用户信息到浏览器
               this.$router.push("/front/home")
