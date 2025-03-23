@@ -1,3 +1,10 @@
+/*
+ * @Author: 桂佳囿
+ * @Date: 2024-01-10 13:54:20
+ * @LastEditors: 桂佳囿
+ * @LastEditTime: 2025-03-23 21:38:37
+ * @Description: 
+ */
 import axios from 'axios'
 import router from "@/router";
 
@@ -50,6 +57,5 @@ request.interceptors.response.use(
     }
 )
 
-import '@/../initialize'
 export default request
 

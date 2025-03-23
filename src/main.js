@@ -1,3 +1,10 @@
+/*
+ * @Author: 桂佳囿
+ * @Date: 2025-03-23 21:17:24
+ * @LastEditors: 桂佳囿
+ * @LastEditTime: 2025-03-23 21:37:40
+ * @Description: 
+ */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -7,7 +14,6 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/gloable.css'
 import request from "@/utils/request";
 import mavonEditor from 'mavon-editor'
-import '../initialize'
 import 'mavon-editor/dist/css/index.css'
 import './assets/font/iconfont.css'
 // use
