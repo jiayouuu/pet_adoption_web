@@ -1,23 +1,24 @@
 <template>
   <div class="wrapper">
     <div
-      style="margin: 150px auto; background-color: #fff; width: 450px; height: 300px; padding: 20px; opacity: 0.8; border-radius: 10px;border: 0px solid grey">
+      style="margin: 150px auto; background-color: #fff; width: 450px; height: 380px; padding: 20px; opacity: 0.8; border-radius: 10px;border: 0px solid grey">
       <div style="margin: 20px 0; text-align: center; font-size: 28px; color: rgb(64, 64, 64);">
         <img src="@/assets/images/public/logo.png"
           style="width: 30px;height: 30px;margin: 0 5px -5px 0;" />
         <b><span style="color: #e75c09">萌宠在线</span></b>
       </div>
       <el-form :model="user" :rules="rules" ref="userForm">
-        <el-form-item prop="username">
-          <el-input size="large" prefix-icon="el-icon-user" v-model="user.username" style="font-size: 22px;"></el-input>
+        <el-form-item prop="email">
+          <el-input size="large" prefix-icon="el-icon-user" v-model="user.email" placeholder="请输入邮箱" style="font-size: 22px;"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input size="large" prefix-icon="el-icon-key" show-password v-model="user.password"  style="font-size: 22px;"></el-input>
+          <el-input size="large" prefix-icon="el-icon-key" show-password v-model="user.password" placeholder="请输入密码" style="font-size: 22px;"></el-input>
         </el-form-item>
-        <el-form-item prop="captcha">
-          <el-input size="large" prefix-icon="el-icon-picture-outline-round" v-model="user.captcha"  style="font-size: 22px;">
+        <el-form-item prop="code">
+          <el-input size="large" prefix-icon="el-icon-picture-outline-round" v-model="user.code"
+          placeholder="请输入验证码"       style="font-size: 22px;">
             <template slot="append">
-              <img :src="captchaImg" alt="验证码" @click="getCaptcha" style="cursor: pointer;width: 100px;height: 40px;">
+              <img :src="user.img" alt="验证码" @click="getCode" style="cursor: pointer;width: 100px;height: 40px;">
             </template>
           </el-input>
         </el-form-item>
@@ -41,31 +42,29 @@ export default {
   data() {
     return {
       user: {},
-      captchaImg: "",
-      captchaId:"",
       rules: {
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在3到10个字符之间', trigger: 'blur' },
+        email: [
+            { required: true, message: '请输入邮箱', trigger: 'change' },
+            { type: 'email', message: '请输入正确的邮箱地址', trigger: 'change' }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 20, message: '长度在6到20个字符之间', trigger: 'blur' }
+          { required: true, message: '请输入密码', trigger: 'change' },
+          { min: 6, max: 20, message: '长度在6到20个字符之间', trigger: 'change' }
         ],
-        captcha: [
-          { required: true, message: '请输入验证码', trigger: 'blur' },
+        code: [
+          {validator: this.validateCaptcha,trigger: 'change'}
         ],
       }
     }
   },
   created() {
-    this.getCaptcha()
+    this.getCode()
   },
   methods: {
     login() {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {  // 表单校验合法
-          this.request.post("/user/login", {...this.user,captchaId:this.captchaId}).then(res => {
+          this.request.post("/user/login", this.user).then(res => {
             if (res.code === 200) {
               localStorage.setItem("user", JSON.stringify(res.data))  // 存储用户信息到浏览器
               localStorage.setItem("menus", JSON.stringify(res.data.menus))  // 存储用户信息到浏览器
@@ -99,15 +98,25 @@ export default {
         }
       });
     },
-    async getCaptcha() {
+    async getCode() {
       const {data,code}= await this.request.get("api/public/imgCode")
       if(code !==200) {
         await new Promise((resolve) => setTimeout(resolve, 3000))
-        this.getCaptcha()
+        return this.getCaptcha()
       }
-      const {img,id}=data;
-      this.captchaImg = img;
-      this.captchaId=id;
+      this.user ={...this.user,...data}
+      delete this.user.code
+    },
+    async validateCaptcha(rules,value,callback) {
+      if(!value) return callback(new Error("请输入验证码"))
+      if(value.length !==5) return callback(new Error("验证码长度为5位"))
+      const {code}= await this.request.post("api/public/validateImgCode",{
+        id:this.user.id,
+        code:this.user.code,
+      })
+      if(code !==200) {
+        return callback(new Error('验证码错误'))
+      }
     }
   }
 }
