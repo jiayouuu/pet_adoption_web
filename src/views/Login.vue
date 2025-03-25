@@ -1,11 +1,11 @@
 <template>
   <div class="wrapper">
     <div
-      style="margin: 150px auto; background-color: #fff; width: 450px; height: 380px; padding: 20px; opacity: 0.8; border-radius: 10px;border: 0px solid grey">
+      style="margin: 150px auto; background-color: #fff; width: 450px; height: 400px; padding: 20px; opacity: 0.8; border-radius: 10px;border: 0px solid grey">
       <div style="margin: 20px 0; text-align: center; font-size: 28px; color: rgb(64, 64, 64);">
         <img src="@/assets/images/public/logo.png"
           style="width: 30px;height: 30px;margin: 0 5px -5px 0;" />
-        <b><span style="color: #e75c09">萌宠在线</span></b>
+        <b><span style="color: #e75c09">萌宠在线—登录</span></b>
       </div>
       <el-form :model="user" :rules="rules" ref="userForm">
         <el-form-item prop="email">
@@ -22,16 +22,17 @@
             </template>
           </el-input>
         </el-form-item>
-        <el-form-item style="margin: 10px 0; text-align: center">
-          <el-button type="warning" autocomplete="off" @click="$router.push('/register')"> 注册</el-button>
-          <el-button type="primary" autocomplete="off" @click="login"> 登录</el-button>
+        <el-form-item style="display: flex;justify-content: center;">
+          <el-checkbox >记住我</el-checkbox>
         </el-form-item>
-
       </el-form>
+      <div style="display: flex; flex-direction: column;">
+        <el-button type="primary" autocomplete="off" @click="login"> 登录</el-button>
+        <div style="margin-top: 15px;text-align: end;">
+          还没有账号？<router-link :to="{path:'/register'}" class="link">立即注册</router-link>
+        </div>
+      </div>
     </div>
-
-
-
   </div>
 </template>
 
@@ -42,6 +43,7 @@ export default {
   data() {
     return {
       user: {},
+      tempCode:'',
       rules: {
         email: [
             { required: true, message: '请输入邮箱', trigger: 'change' },
@@ -62,39 +64,16 @@ export default {
   },
   methods: {
     login() {
-      this.$refs['userForm'].validate((valid) => {
+      this.$refs['userForm'].validate(async(valid) => {
         if (valid) {  // 表单校验合法
-          this.request.post("/user/login", this.user).then(res => {
-            if (res.code === 200) {
-              localStorage.setItem("user", JSON.stringify(res.data))  // 存储用户信息到浏览器
-              localStorage.setItem("menus", JSON.stringify(res.data.menus))  // 存储用户信息到浏览器
+          const {email,password} = this.user
+          const {data,code,msg}=await this.request.post("/user/login", {email,password})
+            if (code !== 200) return this.$message.error(msg)
+            localStorage.setItem("user", JSON.stringify(data))  // 存储用户信息到浏览器
+              localStorage.setItem("menus", JSON.stringify(data.menus))  // 存储用户信息到浏览器
+              localStorage.setItem("token", data.token)
               this.$router.push("/front/home")
               this.$message.success("登录成功")
-            } else {
-              this.$message.error(res.msg)
-            }
-          }).catch(e => {
-            console.log(e);
-            if (
-              e.response == undefined ||
-              e.response.data == undefined
-            ) {
-              this.$message({
-                showClose: true,
-                message: e,
-                type: "error",
-                duration: 5000,
-              });
-            } else {
-              this.$message({
-                showClose: true,
-                message: e.response.data,
-                type: "error",
-                duration: 5000,
-              });
-            }
-
-          })
         }
       });
     },
@@ -102,14 +81,19 @@ export default {
       const {data,code}= await this.request.get("api/public/imgCode")
       if(code !==200) {
         await new Promise((resolve) => setTimeout(resolve, 3000))
-        return this.getCaptcha()
+        return this.getCode()
       }
       this.user ={...this.user,...data}
+      this.tempCode = ''
       delete this.user.code
     },
     async validateCaptcha(rules,value,callback) {
       if(!value) return callback(new Error("请输入验证码"))
       if(value.length !==5) return callback(new Error("验证码长度为5位"))
+      if(this.tempCode){
+        if(value.toLocaleLowerCase() !== this.tempCode.toLocaleLowerCase()) return callback(new Error("验证码错误"))
+        return callback()
+      } 
       const {code}= await this.request.post("api/public/validateImgCode",{
         id:this.user.id,
         code:this.user.code,
@@ -117,6 +101,7 @@ export default {
       if(code !==200) {
         return callback(new Error('验证码错误'))
       }
+      this.tempCode = value
     }
   }
 }
@@ -127,6 +112,15 @@ export default {
   padding: 0;
   background: unset;
   border: 0;
+}
+::v-deep .el-checkbox__label{
+  font-size: 18px;
+}
+.link{
+  &:hover{
+    color: #679AD1;
+    text-decoration: underline;
+  }
 }
 .wrapper {
   position: fixed;
