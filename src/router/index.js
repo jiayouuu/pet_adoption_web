@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/front',
     name: 'Front',
-    component: () => import('../views/front/Front'),
+    component: () => import('../views/front/Front.vue'),
     children: [
       { path: 'person', name: '个人信息', component: () => import('../views/front/Person.vue')},
       { path: 'password', name: '修改密码', component: () => import('../views/front/Password.vue')},
@@ -35,7 +35,7 @@ const routes = [
       {
         path: 'homeDetail',
         name: 'HomeDetail',
-        component: () => import('../views/front/HomeDetail')
+        component: () => import('../views/front/HomeDetail.vue')
       },
       {
         path: 'adopt',
