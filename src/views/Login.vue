@@ -23,7 +23,7 @@
           </el-input>
         </el-form-item>
         <el-form-item style="display: flex;justify-content: center;">
-          <el-checkbox >记住我</el-checkbox>
+          <el-checkbox v-model="user.remeber">记住我</el-checkbox>
         </el-form-item>
       </el-form>
       <div style="display: flex; flex-direction: column;">
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-
+import { Storage } from '@/utils/storage.js'
 export default {
   name: "Login",
   data() {
@@ -69,9 +69,11 @@ export default {
           const {email,password} = this.user
           const {data,code,msg}=await this.request.post("/user/login", {email,password})
             if (code !== 200) return this.$message.error(msg)
-            localStorage.setItem("user", JSON.stringify(data))  // 存储用户信息到浏览器
-              localStorage.setItem("menus", JSON.stringify(data.menus))  // 存储用户信息到浏览器
-              localStorage.setItem("token", data.token)
+            // localStorage.setItem("user", JSON.stringify(data))  // 存储用户信息到浏览器
+              // localStorage.setItem("menus", JSON.stringify(data.menus))  // 存储用户信息到浏览器
+              // localStorage.setItem("token", data.token)
+              const {token} =data;
+              Storage.setItem('token',token,Boolean(this.user.remeber))
               this.$router.push("/front/home")
               this.$message.success("登录成功")
         }
