@@ -315,11 +315,6 @@ core-js@^2.4.0:
   resolved "https://registry.npmmirror.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
-core-js@^3.6.5:
-  version "3.41.0"
-  resolved "https://registry.npmmirror.com/core-js/-/core-js-3.41.0.tgz#57714dafb8c751a6095d028a7428f1fb5834a776"
-  integrity sha512-SJ4/EHwS36QMJd6h/Rg+GyR4A5xE0FSI3eZ+iBVpfqf1x0eTSg1smWLHrA+2jQThZSh97fmSgFSU8B61nxosxA==
-
 cssfilter@0.0.10:
   version "0.0.10"
   resolved "https://registry.npmmirror.com/cssfilter/-/cssfilter-0.0.10.tgz#c6d2672632a2e5c83e013e6864a42ce8defd20ae"
@@ -348,7 +343,7 @@ echarts@^5.3.0:
     tslib "2.3.0"
     zrender "5.6.1"
 
-element-ui@^2.15.6:
+element-ui@^2.15.14:
   version "2.15.14"
   resolved "https://registry.npmmirror.com/element-ui/-/element-ui-2.15.14.tgz#3c34df79467636592812d720d2e6784e7a6ec2ea"
   integrity sha512-2v9fHL0ZGINotOlRIAJD5YuVB8V7WKxrE9Qy7dXhRipa035+kF7WuU/z+tEmLVPBcJ0zt8mOu1DKpWcVzBK8IA==
@@ -704,12 +699,7 @@ vue-template-compiler@^2.7.16:
     de-indent "^1.0.2"
     he "^1.2.0"
 
-vue-vibe@^8.0.3:
-  version "8.3.6"
-  resolved "https://registry.npmmirror.com/vue-vibe/-/vue-vibe-8.3.6.tgz#58ef69045c2e1ec784226d8014c5390eae50ba65"
-  integrity sha512-K4pPtkCGskEhTlW/BdWx8ygnYMdezt6xl8Dhx6l4Sr5qnNjKkCBkMNazn+TC4X1Xw7OQp1fbyYTSL6gusM0PVA==
-
-vue@^2.6.11:
+vue@^2.7.16:
   version "2.7.16"
   resolved "https://registry.npmmirror.com/vue/-/vue-2.7.16.tgz#98c60de9def99c0e3da8dae59b304ead43b967c9"
   integrity sha512-4gCtFXaAA3zYZdTp5s4Hl2sozuySsgz4jy1EnpBHNfpMa9dK1ZCG7viqBPCwXtmgc8nHqUsAu3G4gtmXkkY3Sw==
