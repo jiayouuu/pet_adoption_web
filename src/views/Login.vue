@@ -80,7 +80,7 @@ export default {
       });
     },
     async getCode() {
-      const {data,code}= await this.request.get("api/public/imgCode")
+      const {data,code}= await this.request.get("/public/imgCode")
       if(code !==200) {
         await new Promise((resolve) => setTimeout(resolve, 3000))
         return this.getCode()

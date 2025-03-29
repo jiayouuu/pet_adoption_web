@@ -9,7 +9,7 @@ import axios from 'axios'
 import router from "@/router";
 
 const request = axios.create({
-    baseURL: 'http://localhost:9311',
+    baseURL: import.meta.env.VITE_BASE_URL,
     timeout: 5000
 })
 

@@ -61,11 +61,11 @@ export default {
   name: "Front",
   data() {
     return {
-      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+      user: this.$store.state.user,
     }
   },
   created() {
-
+    console.log(this.$store.state.user)
   },
   methods: {
     logout() {

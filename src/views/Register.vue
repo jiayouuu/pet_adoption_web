@@ -79,7 +79,7 @@ export default {
       this.$refs['userForm'].validate(async (valid) => {
         if (valid) {  // 表单校验合法
 
-          const  {code, data,msg} =await this.request.post('/api/public/validateEmailCode',{
+          const  {code, data,msg} =await this.request.post('/public/validateEmailCode',{
             email: this.user.email,
             code: this.user.code
           },{
@@ -105,7 +105,7 @@ export default {
       })
     },
     async getCode(){
-      const {code,data} = await this.request.get("/api/public/email/code", {
+      const {code,data} = await this.request.get("/public/email/code", {
         params: {
           email: this.user.email
         }

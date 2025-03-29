@@ -12,7 +12,7 @@ import path from 'path'
 export default defineConfig({
   plugins: [vue()],
   server: {
-    port: 9000, // 设置开发服务器端口为 8080
+    port: 8000, // 设置开发服务器端口为 8080
     open: true, // 自动打开浏览器（可选）
     host: '0.0.0.0' // 允许外部访问（可选）
   },
