@@ -1,20 +1,13 @@
 <template>
   <el-card style="min-height: calc(100vh - 80px); margin: 10px 0;">
     <el-form label-width="80px" >
-      <el-upload
-          class="avatar-uploader"
-          :action="$store.state.baseApi+'/file/upload'"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-      >
-        <img v-if="form.avatarUrl" :src="$store.state.baseApi+form.avatarUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
-
-      <el-form-item label="用户名">
-        <el-input v-model="form.username" disabled autocomplete="off"></el-input>
+      <upload 
+      :url="form.avatarUrl"
+      @handleMediaUrl="handleMediaUrl"/>
+      <el-form-item label="邮箱">
+        <el-input v-model="form.email" disabled autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="姓名">
+      <el-form-item label="昵称">
         <el-input v-model="form.nickname" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="性别">
@@ -22,11 +15,7 @@
         <el-radio v-model="form.sex" label="女">女</el-radio>
       </el-form-item>
       <el-form-item label="生日">
-        <el-date-picker clearable style="width: 80%" v-model="form.birth" type="date" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
-      </el-form-item>
-
-      <el-form-item label="邮箱">
-        <el-input v-model="form.email" autocomplete="off"></el-input>
+        <el-date-picker clearable style="width: 100%" v-model="form.birth" type="date" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
       </el-form-item>
       <el-form-item label="电话">
         <el-input v-model="form.phone" autocomplete="off"></el-input>
@@ -42,44 +31,42 @@
 </template>
 
 <script>
+import upload from "@/components/Upload.vue";
+import {Storage} from '@/utils/storage'
 export default {
   name: "Person",
+  components: {
+    upload
+  },
   data() {
     return {
-      form: {},
-      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+      form: JSON.parse(JSON.stringify(this.$store.state.user.user))
     }
   },
   created() {
-    this.getUser().then(res => {
-      console.log(res)
-      this.form = res
-    })
   },
   methods: {
-    async getUser() {
-      return (await this.request.get("/user/username/" + this.user.username)).data
-    },
     save() {
       this.request.post("/user", this.form).then(res => {
         if (res.code === 200) {
           this.$message.success("保存成功")
 
           // 触发父级更新User的方法
-          this.$emit("refreshUser")
+          // this.$emit("refreshUser")
 
-          // 更新浏览器存储的用户信息
-          this.getUser().then(res => {
-            res.token = JSON.parse(localStorage.getItem("user")).token
-            localStorage.setItem("user", JSON.stringify(res))
-          })
-
+          if(localStorage.getItem('token')){
+            localStorage.setItem('token',res.data)
+          }else{
+            sessionStorage.setItem('token',res.data)
+          }
+          this.$store.commit('updateUser')
+          
         } else {
           this.$message.error("保存失败")
         }
       })
     },
-    handleAvatarSuccess(res) {
+    handleMediaUrl(res) {
       this.form.avatarUrl = res
     }
   }

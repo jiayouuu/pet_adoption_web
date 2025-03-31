@@ -18,7 +18,7 @@
         </el-menu>
       </div>
       <div style="width: 160px">
-        <div v-if="!user.username" style="text-align: right; padding-right: 30px">
+        <div v-if="!user.email" style="text-align: right; padding-right: 30px">
           <el-button @click="$router.push('/login')">登录</el-button>
           <el-button @click="$router.push('/register')">注册</el-button>
         </div>
@@ -26,7 +26,7 @@
           <el-dropdown style="width: 150px; cursor: pointer; text-align: right">
 
             <div style="display: inline-block;margin-top: -20px;font-size: 18px;">
-        <img :src="$store.state.baseApi+user.avatarUrl" alt=""
+        <img :src="$store.state.baseApi+'/files/download/'+user.avatarUrl" alt=""
              style="width: 57px; border-radius: 10%; position: relative; top: 21px; right: 5px">
         <span>{{ user.nickname }}</span>
         <i class="el-icon-arrow-down" style="margin-left: 5px;"></i>
@@ -61,18 +61,19 @@ export default {
   name: "Front",
   data() {
     return {
-      user: this.$store.state.user,
     }
-  },
-  created() {
-    console.log(this.$store.state.user)
   },
   methods: {
     logout() {
-      this.$store.commit("logout")
+      this.$store.dispatch('logout')
       this.$message.success("退出成功")
     }
-  }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user.user
+    }
+  },
 }
 </script>
 

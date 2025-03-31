@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { Storage } from '@/utils/storage.js'
+import { Storage } from '@/utils/storage.ts'
 export default {
   name: "Login",
   data() {
@@ -67,27 +67,28 @@ export default {
       this.$refs['userForm'].validate(async(valid) => {
         if (valid) {  // 表单校验合法
           const {email,password} = this.user
-          const {data,code,msg}=await this.request.post("/user/login", {email,password})
-            if (code !== 200) return this.$message.error(msg)
-            // localStorage.setItem("user", JSON.stringify(data))  // 存储用户信息到浏览器
-              // localStorage.setItem("menus", JSON.stringify(data.menus))  // 存储用户信息到浏览器
-              // localStorage.setItem("token", data.token)
-              const {token} =data;
-              Storage.setItem('token',token,Boolean(this.user.remeber))
-              this.$router.push("/front/home")
-              this.$message.success("登录成功")
+          const {data}=await this.request.post("/user/login", {email,password})
+          const {token} =data;
+          Storage.setItem('token',token,Boolean(this.user.remeber))
+          this.$store.commit('updateUser')
+          this.$router.push("/front/home")
+          this.$message.success("登录成功")
         }
       });
     },
     async getCode() {
-      const {data,code}= await this.request.get("/public/imgCode")
-      if(code !==200) {
+      try {
+        const {data}= await this.request.get("/public/imgCode")
+        this.user ={...this.user,...data}
+        this.tempCode = ''
+        delete this.user.code
+      } catch{
         await new Promise((resolve) => setTimeout(resolve, 3000))
         return this.getCode()
       }
-      this.user ={...this.user,...data}
-      this.tempCode = ''
-      delete this.user.code
+      
+        
+      
     },
     async validateCaptcha(rules,value,callback) {
       if(!value) return callback(new Error("请输入验证码"))
@@ -95,15 +96,17 @@ export default {
       if(this.tempCode){
         if(value.toLocaleLowerCase() !== this.tempCode.toLocaleLowerCase()) return callback(new Error("验证码错误"))
         return callback()
-      } 
-      const {code}= await this.request.post("api/public/validateImgCode",{
+      }
+      try {
+        await this.request.post("/public/validateImgCode",{
         id:this.user.id,
         code:this.user.code,
       })
-      if(code !==200) {
+      this.tempCode = value
+      } catch (error) {
         return callback(new Error('验证码错误'))
       }
-      this.tempCode = value
+      
     }
   }
 }

@@ -21,8 +21,8 @@
 
 <script>
 
-import Aside from "@/components/manage/Aside";
-import Header from "@/components/manage/Header";
+import Aside from "@/components/manage/Aside.vue";
+import Header from "@/components/manage/Header.vue";
 
 export default {
   name: 'Home',

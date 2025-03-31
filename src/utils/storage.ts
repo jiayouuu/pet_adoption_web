@@ -2,9 +2,11 @@
  * @Author: 桂佳囿
  * @Date: 2025-02-27 23:17:43
  * @LastEditors: 桂佳囿
- * @LastEditTime: 2025-03-27 00:54:54
+ * @LastEditTime: 2025-03-23 01:06:38
  * @Description:
  */
+import type { TokenInfo } from '@/types/public'
+
 
 export class Storage {
   /**
@@ -12,7 +14,7 @@ export class Storage {
      * @param {string} key
      * @return {*}
      */
-  static getItem(key) {
+  public static getItem(key: string): string | null {
     return sessionStorage.getItem(key) || localStorage.getItem(key);
   }
 
@@ -23,7 +25,7 @@ export class Storage {
      * @param {boolean} isLongTime
      * @return {*}
      */
-  static setItem(key, value, isLongTime = true){
+  public static setItem(key: string, value: string, isLongTime:boolean = true): void {
     this.removeItem(key);
     if (!isLongTime) sessionStorage.setItem(key, value);
     else localStorage.setItem(key, value);
@@ -34,7 +36,7 @@ export class Storage {
      * @param {string} key
      * @return {*}
      */
-   static removeItem(key) {
+  public static removeItem(key: string): void {
     sessionStorage.removeItem(key);
     localStorage.removeItem(key);
   }
@@ -43,12 +45,12 @@ export class Storage {
      * @description: 情况所有的缓存
      * @return {*}
      */
-   static clear() {
+  public static clear():void {
     sessionStorage.clear();
     localStorage.clear();
   }
 
-   static parseJWT(){
+  public static parseJWT():TokenInfo | null {
     const token = this.getItem('token');
     if (!token) return null;
     const base64Url = token.split('.')[1];
@@ -56,7 +58,7 @@ export class Storage {
     const jsonPayload = decodeURIComponent(atob(base64).split('').map((c)=>
       ('%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
     ).join(''));
-    const tokenInfo = JSON.parse(jsonPayload);
+    const tokenInfo = JSON.parse(jsonPayload) as TokenInfo;
     if(tokenInfo.exp < Date.now() / 1000) {
       this.removeItem('token');
       return null;

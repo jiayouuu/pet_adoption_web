@@ -10,11 +10,16 @@ import vue from '@vitejs/plugin-vue2'
 import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+  ],
   server: {
     port: 8000, // 设置开发服务器端口为 8080
     open: true, // 自动打开浏览器（可选）
     host: '0.0.0.0' // 允许外部访问（可选）
+  },
+  define: {
+    global: 'globalThis', // 定义 global 为 globalThis
   },
   resolve: {
     alias: {

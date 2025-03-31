@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "esnext",
+      "strict": false, // 关闭严格模式，方便逐步引入
+      "jsx": "preserve", // 支持 JSX（如果需要）
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "sourceMap": true,
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["src/*"] // 与 vite.config.js 中的 alias 保持一致
+      },
+      "types": ["vite/client", "node"], // 引入 Vite 和 Node 的类型
+      "allowJs": true, // 允许混用 JavaScript 文件
+      "checkJs": false // 不检查 JavaScript 文件
+    },
+    "include": [
+      "src/**/*",
+      "src/**/*.ts",
+      "src/**/*.vue"
+    ],
+    "exclude": [
+      "node_modules",
+      "dist"
+    ]
+  }

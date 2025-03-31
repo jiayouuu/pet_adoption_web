@@ -12,7 +12,8 @@ import store from '@/store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/gloable.scss'
-import request from "@/utils/request";
+// import request from "@/utils/request";
+import {http} from '@/utils/http'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 // use
@@ -22,7 +23,7 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI, { size: "mini" });
 
-Vue.prototype.request=request
+Vue.prototype.request=http
 
 new Vue({
   router,
