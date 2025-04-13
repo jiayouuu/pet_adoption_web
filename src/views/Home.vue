@@ -7,11 +7,11 @@
         <el-divider />
         <el-row>
           <el-col :span="12">
-            <div id="main" style="width: 500px; height: 400px"></div>
+            <div ref="barLine" style="width: 500px; height: 400px"></div>
           </el-col>
 
           <el-col :span="12">
-            <div id="pie" style="width: 500px; height: 400px"></div>
+            <div ref="pie" style="width: 500px; height: 400px"></div>
           </el-col>
         </el-row>
       </el-card>
@@ -31,18 +31,20 @@ export default {
       user: this.$store.state.user
     }
   },
-  mounted() {  // 页面元素渲染后再触发
+  mounted:async function(){  // 页面元素渲染后再触发
 
-    var option = {
+    const option = {
       title: {
-        text: '各季度系统注册人数统计',
-        subtext: '趋势图',
+        text: '用户注册时间统计',
         left: 'center'
       },
-
+      tooltip: {
+        trigger: 'item',
+        formatter: '{b} : {c} 人次'
+      },
       xAxis: {
         type: 'category',
-        data: ["第一季度", "第二季度", "第三季度", "第四季度"]
+        data: []
       },
       yAxis: {
         type: 'value'
@@ -50,7 +52,8 @@ export default {
       series: [
         {
           data: [],
-          type: 'line'
+          type: 'line',
+          smooth: true
         },
         {
           data: [],
@@ -58,28 +61,25 @@ export default {
         }
       ]
     };
-    var chartDom = document.getElementById('main');
-    var myChart = echarts.init(chartDom);
-    this.request.get("/echarts/members").then(res => {
-      // 填空
-      // option.xAxis.data = res.data.x
-      option.series[0].data = res.data
-      option.series[1].data = res.data
+    const myChart = echarts.init(this.$refs.barLine);
+    const {data}=await this.request.get("/echarts/quarter")
+      option.xAxis.data = data.map(i=>i.quarterName)
+      option.series[0].data = data.map(i=>i.count)
+      option.series[1].data = data.map(i=>i.count)
       // 数据准备完毕之后再set
       myChart.setOption(option);
-    })
 
 
     // 饼图
 
-    var pieOption = {
+    const pieOption = {
       title: {
-        text: '各季度系统注册人数统计',
-        subtext: '比例图',
+        text: '用户性别占比统计',
         left: 'center'
       },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{b} : {c}人 ({d}%)'
       },
       legend: {
         orient: 'vertical',
@@ -98,7 +98,7 @@ export default {
                 fontSize: 14,    //文字的字体大小
                 color: "#fff"
               },
-              formatter: '{d}%'
+              formatter: '{b}  {d}%'
             }
           },
           data: [],  // 填空
@@ -113,19 +113,14 @@ export default {
       ]
     };
 
-    var pieDom = document.getElementById('pie');
-    var pieChart = echarts.init(pieDom);
+    const pieChart = echarts.init(this.$refs.pie);
+    const {data:pieData} =await this.request.get("/echarts/sex")
 
-    this.request.get("/echarts/members").then(res => {
-
-      pieOption.series[0].data = [
-        { name: "第一季度", value: res.data[0] },
-        { name: "第二季度", value: res.data[1] },
-        { name: "第三季度", value: res.data[2] },
-        { name: "第四季度", value: res.data[3] },
-      ]
+      pieOption.series[0].data = pieData.map(i=>({
+        name:i.sex,
+        value:i.count
+      }))
       pieChart.setOption(pieOption)
-    })
   }
 }
 </script>
