@@ -2,7 +2,7 @@
  * @Author: 桂佳囿
  * @Date: 2025-03-06 20:55:33
  * @LastEditors: 桂佳囿
- * @LastEditTime: 2025-03-15 00:51:58
+ * @LastEditTime: 2025-04-13 19:32:45
  * @Description: 
  */
 import { nanoid } from 'nanoid';
@@ -27,9 +27,9 @@ export class FileUpload {
   private controller: AbortController;
   private uploadedChunks:number;
   private wsService: WebSocketService;
-  private callback:(process:number)=>void;
+  private callback:(process:string)=>void;
   
-  constructor(file: File, callback:(process:number)=>void) {
+  constructor(file: File, callback:(process:string)=>void) {
     this.file = file;
     this.fileName = file.name;
     this.fileId = nanoid();
@@ -60,12 +60,12 @@ export class FileUpload {
         const stompClient = await this.wsService.connect();
 
         // 订阅上传进度
-        stompClient.subscribe(`/topic/upload-progress/${this.fileId}`, (message) => {
-          const progress = parseInt(message.body, 10);
+        stompClient.subscribe(`/user/queue/private/upload-progress/${this.fileId}`, (message) => {
+          const progress = message.body;
           this.callback(progress)
         });
         // 订阅上传完成
-        stompClient.subscribe(`/topic/upload-complete/${this.fileId}`, (message) => {
+        stompClient.subscribe(`/user/queue/private/upload-complete/${this.fileId}`, (message) => {
           const fileName = message.body;
           console.log(`文件上传完成: ${fileName}`);
           resolve(fileName); // 解析最终文件名
