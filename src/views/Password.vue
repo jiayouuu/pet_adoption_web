@@ -1,3 +1,10 @@
+<!--
+ * @Author: 桂佳囿
+ * @Date: 2024-01-10 13:54:20
+ * @LastEditors: 桂佳囿
+ * @LastEditTime: 2025-04-13 19:43:49
+ * @Description: 
+-->
 <template>
   <el-card style="width: 500px;">
     <el-form label-width="120px"  :model="form" :rules="rules" ref="pass">
@@ -11,6 +18,14 @@
       <el-form-item label="确认新密码" prop="confirmPassword">
         <el-input v-model="form.confirmPassword" autocomplete="off" show-password></el-input>
       </el-form-item>
+      <el-form-item prop="code" class="custom-form-item">
+          <el-input placeholder="请输入验证码" size="large" prefix-icon="el-icon-message" 
+            v-model="user.code" style="font-size: 22px;">
+          <template slot="append">
+            <el-button :disabled="codeButtondisabled" @click="handleClick" >{{ codeButtonTxt }}</el-button>
+          </template>
+          </el-input>
+        </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="save"> 确 定</el-button>
       </el-form-item>

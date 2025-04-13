@@ -23,16 +23,12 @@
           <el-button @click="$router.push('/register')">注册</el-button>
         </div>
         <div v-else>
-          <el-dropdown style="width: 150px; cursor: pointer; text-align: right">
-
-            <div style="display: inline-block;margin-top: -20px;font-size: 18px;">
-        <img :src="$store.state.baseApi+'/files/download/'+user.avatarUrl" alt=""
-             style="width: 57px; border-radius: 10%; position: relative; top: 21px; right: 5px">
-        <span>{{ user.nickname }}</span>
-        <i class="el-icon-arrow-down" style="margin-left: 5px;"></i>
-      </div>
+          <el-dropdown style="width: 150px; cursor: pointer;">
+            <div style="display: flex; justify-content: center; margin-top: 10px">
+              <el-avatar size="large" :src="$store.state.baseApi+'/files/download/'+user.avatarUrl" />
+            </div>
             <el-dropdown-menu slot="dropdown" style="width: 100px; text-align: center">
-              <el-dropdown-item style="font-size: 14px; padding: 5px 0" v-if="user.role === 'ROLE_ADMIN'">
+              <el-dropdown-item style="font-size: 14px; padding: 5px 0" v-if="user.role === 'ADMIN'">
                 <router-link to="/home">后台管理</router-link>
               </el-dropdown-item>
               <el-dropdown-item style="font-size: 14px; padding: 5px 0">
