@@ -167,6 +167,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
+  base: import.meta.env.VITE_BASE_ROUTE,
   routes
 })
 

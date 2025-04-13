@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" size="large"  placeholder="请输入名称" suffix-icon="iconfont icon-r-find" v-model="username"></el-input>
+      <el-input style="width: 200px" size="large"  placeholder="请输入名称" suffix-icon="iconfont icon-r-find" v-model="nickname"></el-input>
       <el-input style="width: 200px" size="large"  placeholder="请输入邮箱" suffix-icon="el-icon-message" class="ml-5" v-model="email"></el-input>
       <el-input style="width: 200px" size="large"  placeholder="请输入地址" suffix-icon="el-icon-position" class="ml-5" v-model="address"></el-input>
     </div>
@@ -30,9 +30,8 @@
     <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="username" label="用户名" width="140"></el-table-column>
+      <el-table-column prop="nickname" label="昵称" width="140"></el-table-column>
       <el-table-column prop="role" label="角色"></el-table-column>
-      <el-table-column prop="nickname" label="姓名" width="120"></el-table-column>
       <el-table-column prop="sex" label="性别" width="120"></el-table-column>
       <el-table-column prop="birth" label="生日" width="120"></el-table-column>
       <el-table-column prop="email" label="邮箱"></el-table-column>
@@ -69,16 +68,13 @@
 
     <el-dialog title="用户信息" :visible.sync="dialogFormVisible" width="30%" >
       <el-form label-width="80px" >
-        <el-form-item label="用户名">
-          <el-input v-model="form.username" autocomplete="off"></el-input>
+        <el-form-item label="昵称">
+          <el-input v-model="form.nickname" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="角色">
           <el-select clearable v-model="form.role" placeholder="请选择角色" style="width: 100%">
             <el-option v-for="item in roles" :key="item.name" :label="item.name" :value="item.flag"></el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item label="姓名">
-          <el-input v-model="form.nickname" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="性别">
           <el-radio v-model="form.sex" label="男">男</el-radio>
@@ -115,7 +111,7 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 10,
-      username: "",
+      nickname: "",
       email: "",
       address: "",
       form: {},
@@ -133,7 +129,7 @@ export default {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          username: this.username,
+          nickname: this.nickname,
           email: this.email,
           address: this.address,
         }
@@ -193,7 +189,7 @@ export default {
       })
     },
     reset() {
-      this.username = ""
+      this.nickname = ""
       this.email = ""
       this.address = ""
       this.load()

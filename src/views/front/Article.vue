@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     saveComment() {
-      if (!this.user.username) {
+      if (!this.user.email) {
         this.$message.warning("请登录后评论")
         return
       }
