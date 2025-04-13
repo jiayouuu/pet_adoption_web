@@ -16,7 +16,6 @@ const store = new Vuex.Store({
         },
         updateUser(state) {
             state.user = Storage.parseJWT() || {}
-            console.log('ddd')
         }
     },
     actions: {

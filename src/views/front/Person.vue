@@ -1,3 +1,10 @@
+<!--
+ * @Author: 桂佳囿
+ * @Date: 2024-01-10 13:54:20
+ * @LastEditors: 桂佳囿
+ * @LastEditTime: 2025-04-13 16:56:57
+ * @Description: 
+-->
 <template>
   <el-card style="min-height: calc(100vh - 80px); margin: 10px 0;">
     <el-form label-width="80px" >
@@ -40,7 +47,7 @@ export default {
   },
   data() {
     return {
-      form: JSON.parse(JSON.stringify(this.$store.state.user.user))
+      form: JSON.parse(JSON.stringify(this.$store.state.user))
     }
   },
   created() {

@@ -1,5 +1,5 @@
 <template>
-  <el-menu :default-openeds="opens" style="min-height: 100%; overflow-x: hidden; padding-bottom: 20px;"
+  <el-menu :default-openeds="menus.map(i=>String(i.id))" style="min-height: 100%; overflow-x: hidden; padding-bottom: 20px;"
            background-color="#6495ED"
            text-color="white"
            active-text-color="white"
@@ -9,7 +9,7 @@
   >
     <div style="height: 60px; line-height: 60px; text-align: center">
       <img src="@/assets/images/public/logo.png" alt="" style="width: 30px; position: relative; top: 5px;">
-      <b style="color: #ffffff; margin-left: 5px;font-size: 24px;" v-show="logoTextShow">宠物系统后台</b>
+      <b style="color: #ffffff; margin-left: 5px;font-size: 24px;" v-show="logoTextShow">萌宠在线-后台</b>
     </div>
     <div v-for="item in menus" :key="item.id">
       <div v-if="item.path">
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import {menus} from '../constant/menu'
 export default {
   name: "Aside",
   props: {
@@ -45,8 +46,7 @@ export default {
   },
   data() {
     return {
-      menus: localStorage.getItem("menus") ? JSON.parse(localStorage.getItem("menus")) : [],
-      opens: localStorage.getItem("menus") ? JSON.parse(localStorage.getItem("menus")).map(v => v.id + '') : []
+      menus: menus,
     }
   },
 }
