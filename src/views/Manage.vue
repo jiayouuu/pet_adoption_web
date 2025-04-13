@@ -1,3 +1,10 @@
+<!--
+ * @Author: 桂佳囿
+ * @Date: 2024-01-10 13:54:20
+ * @LastEditors: 桂佳囿
+ * @LastEditTime: 2025-04-13 23:08:24
+ * @Description: 
+-->
 <template>
   <el-container style="min-height: 100vh">
 
@@ -11,8 +18,7 @@
       </el-header>
 
       <el-main>
-<!--        表示当前页面的子路由会在 <router-view /> 里面展示-->
-        <router-view @refreshUser="getUser" />
+        <router-view />
       </el-main>
 
     </el-container>
@@ -32,7 +38,6 @@ export default {
       isCollapse: false,
       sideWidth: 200,
       logoTextShow: true,
-      user: {}
     }
   },
   components: {
@@ -40,8 +45,6 @@ export default {
     Header
   },
   created() {
-    // 从后台获取最新的User数据
-    this.getUser()
   },
   methods: {
     collapse() {  // 点击收缩按钮触发
@@ -55,18 +58,13 @@ export default {
         this.collapseBtnClass = 'el-icon-s-fold'
         this.logoTextShow = true
       }
-    },
-    getUser() {
-      let username = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).username : ""
-      if (username) {
-        // 从后台获取User数据
-        this.request.get("/user/username/" + username).then(res => {
-          // 重新赋值后台的最新User数据
-          this.user = res.data
-        })
-      }
     }
-  }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user
+    }
+  },
 }
 </script>
 

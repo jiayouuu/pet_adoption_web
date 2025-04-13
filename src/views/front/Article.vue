@@ -119,7 +119,7 @@ export default {
       form: {},
       dialogFormVisible: false,
       multipleSelection: [],
-      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+      user: this.$store.state.user,
       vis: false,
       content: '',
       comment: {},

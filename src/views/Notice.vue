@@ -8,6 +8,7 @@
       <el-button class="ml-5" type="primary" @click="load"> 搜索</el-button>
       <el-button type="warning" @click="reset"> 重置</el-button>
       <el-button type="primary" @click="handleAdd"> 新增 </el-button>
+      <el-button type="primary" @click="handlePushAll"> 一键推送 </el-button>
       <el-popconfirm
           class="ml-5"
           confirm-button-text='确定'
@@ -19,13 +20,9 @@
       >
         <el-button type="danger" slot="reference"> 批量删除 </el-button>
       </el-popconfirm>
-      <!-- <el-upload :action="$store.state.baseApi+'/notice/import'" :show-file-list="false" accept="xlsx" :on-success="handleExcelImportSuccess" style="display: inline-block">
-        <el-button type="primary" class="ml-5"> 导入 <i class="el-icon-bottom"></i></el-button>
-      </el-upload>
-      <el-button type="primary" @click="exp" class="ml-5"> 导出 <i class="el-icon-top"></i></el-button> -->
     </div>
 
-    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="handleSelectionChange">
+    <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"  @selection-change="multipleSelection=$event">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80" sortable></el-table-column>
       <el-table-column prop="name" label="名称"></el-table-column>
@@ -34,6 +31,7 @@
 
       <el-table-column label="操作"  fixed="right"   width="280" align="center">
         <template slot-scope="scope">
+          <el-button type="primary" @click="handlePush(String(scope.row.id))"> 推送 </el-button>
           <el-button type="success" @click="handleEdit(scope.row)"> 编辑 </el-button>
           <el-popconfirm
               class="ml-5"
@@ -95,7 +93,6 @@ export default {
       form: {},
       dialogFormVisible: false,
       multipleSelection: [],
-      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
     }
   },
   created() {
@@ -159,16 +156,12 @@ export default {
         }
       })
     },
-    handleSelectionChange(val) {
-      console.log(val)
-      this.multipleSelection = val
-    },
     delBatch() {
       if (!this.multipleSelection.length) {
-        this.$message.error("请选择需要删除的数据")
+        this.$message.error("请选择需要删除的公告")
         return
       }
-      let ids = this.multipleSelection.map(v => v.id)  // [{}, {}, {}] => [1,2,3]
+      let ids = this.multipleSelection.map(v => v.id)
       this.request.post("/notice/del/batch", ids).then(res => {
         if (res.code === 200) {
           this.$message.success("批量删除成功")
@@ -192,21 +185,19 @@ export default {
       this.pageNum = pageNum
       this.load()
     },
-    handleFileUploadSuccess(res) {
-      this.form.file = res
+    handlePushAll(){
+      if (!this.multipleSelection.length) {
+        this.$message.error("请选择需要推送的公告")
+        return
+      }
+      const ids=this.multipleSelection.map(v => v.id).join(',')
+      this.handlePush(ids)
     },
-    handleImgUploadSuccess(res) {
-      this.form.img = res
-    },
-    download(url) {
-      window.open(url)
-    },
-    exp() {
-      window.open(this.$store.state.baseApi+"/notice/export")
-    },
-    handleExcelImportSuccess() {
-      this.$message.success("导入成功")
-      this.load()
+    async handlePush(id){
+      const {code} = await this.request.post("/notice/push",{id})
+      if (code === 200) {
+        this.$message.success("推送成功")
+      }
     }
   }
 }

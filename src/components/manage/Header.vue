@@ -1,10 +1,17 @@
+<!--
+ * @Author: 桂佳囿
+ * @Date: 2025-03-29 22:50:55
+ * @LastEditors: 桂佳囿
+ * @LastEditTime: 2025-04-13 23:14:31
+ * @Description: 
+-->
 <template>
   <div style="line-height: 75px; display: flex">
     <div style="flex: 1;">
       <span :class="collapseBtnClass" style="cursor: pointer; font-size: 18px" @click="collapse"></span>
 
       <el-breadcrumb separator="/" style="display: inline-block; margin-left: 10px">
-        <el-breadcrumb-item :to="'/'">首页</el-breadcrumb-item>
+        <el-breadcrumb-item >首页</el-breadcrumb-item>
         <el-breadcrumb-item>{{ currentPathName }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -56,7 +63,7 @@ export default {
       this.$emit("asideCollapse")
     },
     logout() {
-      this.$store.commit("logout")
+      this.$store.dispatch('logout')
       this.$message.success("退出成功")
     }
   }

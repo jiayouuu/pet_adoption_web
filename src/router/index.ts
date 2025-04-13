@@ -8,70 +8,70 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('@/views/Login.vue')
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('../views/Register.vue')
+    component: () => import('@/views/Register.vue')
   },
   {
     path: '/404',
     name: '404',
-    component: () => import('../views/404.vue')
+    component: () => import('@/views/404.vue')
   },
   {
     path: '/front',
     name: 'Front',
-    component: () => import('../views/front/Front.vue'),
+    component: () => import('@/views/front/Front.vue'),
     children: [
-      { path: 'person', name: '个人信息', component: () => import('../views/front/Person.vue')},
-      { path: 'password', name: '修改密码', component: () => import('../views/front/Password.vue')},
+      { path: 'person', name: '个人信息', component: () => import('@/views/front/Person.vue')},
+      { path: 'password', name: '修改密码', component: () => import('@/views/front/Password.vue')},
       {
         path: 'home',
         name: 'FrontHome',
-        component: () => import('../views/front/Home.vue')
+        component: () => import('@/views/front/Home.vue')
       },
       {
         path: 'homeDetail',
         name: 'HomeDetail',
-        component: () => import('../views/front/HomeDetail.vue')
+        component: () => import('@/views/front/HomeDetail.vue')
       },
       {
         path: 'adopt',
         name: 'Adopt',
-        component: () => import('../views/front/Adopt.vue')
+        component: () => import('@/views/front/Adopt.vue')
       },
       {
         path: 'myAdopt',
         name: 'MyAdopt',
-        component: () => import('../views/front/MyAdopt.vue')
+        component: () => import('@/views/front/MyAdopt.vue')
       },
       {
         path: 'salvation',
         name: 'Salvation',
-        component: () => import('../views/front/Salvation.vue')
+        component: () => import('@/views/front/Salvation.vue')
       },
       {
         path: 'lost',
         name: 'Lost',
-        component: () => import('../views/front/Lost.vue')
+        component: () => import('@/views/front/Lost.vue')
       },
       {
         path: 'article',
         name: 'Article',
-        component: () => import('../views/front/Article.vue')
+        component: () => import('@/views/front/Article.vue')
       },
       {
         path: 'articleKp',
         name: 'ArticleKp',
-        component: () => import('../views/ArticleKp.vue')
+        component: () => import('@/views/ArticleKp.vue')
       },
     ]
   },
-  { path: '/', name: 'Manage', component: () => import('../views/Manage.vue'), redirect: "/login", children: [
-    { path: 'person', name: '个人信息', component: () => import('../views/Person.vue')},
-    { path: 'password', name: '修改密码', component: () => import('../views/Password.vue')},
+  { path: '/', name: 'Manage', component: () => import('@/views/Manage.vue'), redirect: "/login", children: [
+    { path: 'person', name: '个人信息', component: () => import('@/views/front/Person.vue')},
+    { path: 'password', name: '修改密码', component: () => import('@/views/front/Password.vue')},
       {
           path: "home",
           name: "主页",

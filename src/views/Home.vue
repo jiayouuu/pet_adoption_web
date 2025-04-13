@@ -1,15 +1,9 @@
 <template>
   <div style="color: #666;font-size: 14px;">
-    <div style="padding-bottom: 20px">
-      <b>您好！{{ user.nickname }}</b>
-    </div>
-
     <div style="margin-bottom: 60px">
       <el-card>
-        <div class="welcome"> <b> 欢迎使用宠物领养救助平台</b></div>
+        <div class="welcome"> <b>你好{{ user.nickname }}！ 欢迎使用萌宠在线数据看板</b></div>
         <el-divider />
-        <!-- <img src="@/assets/back-background.jpg"
-          style="height: 350px;margin: 5px 5px 0 0;-webkit-user-drag: none;-khtml-user-drag: none;-moz-user-drag: none;user-drag: none;" /> -->
         <el-divider />
         <el-row>
           <el-col :span="12">
@@ -34,7 +28,7 @@ export default {
   name: "Home",
   data() {
     return {
-      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+      user: this.$store.state.user
     }
   },
   mounted() {  // 页面元素渲染后再触发
